@@ -62,6 +62,10 @@ def remove_nikkud(s: str):
 
 
 def generate_resurces(string_res: str, langs: list[str]):
+    if os.path.exists(string_res):
+        with open(string_res, "r") as f:
+            string_res = f.read()
+
     for lang in langs:
         new_string = translate_string(string_res, lang)
 
