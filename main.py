@@ -1,4 +1,5 @@
 import os
+import shutil
 import threading
 
 import deep_translator
@@ -62,12 +63,15 @@ def remove_nikkud(s: str):
 
 
 def generate_resurces(string_res: str, langs: list[str]):
-    if os.path.exists(string_res):
+    if os.path.isfile(string_res):
         with open(string_res, "r") as f:
             string_res = f.read()
 
     for lang in langs:
         new_string = translate_string(string_res, lang)
+
+        if os.path.isdir(f"values-{lang}"):
+            shutil.rmtree(f"values-{lang}")
 
         os.mkdir(f"values-{lang}")
         with open(f"values-{lang}/strings.xml", "w") as f:
